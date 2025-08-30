@@ -5,6 +5,23 @@ import auth from '../middleware/auth.js';
 const router = express.Router();
 
 // Create ride
+
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const rideId = req.params.id;
+    const deletedRide = await Ride.findByIdAndDelete(rideId);
+
+    if (!deletedRide) {
+      return res.status(404).json({ message: "Ride not found" });
+    }
+
+    res.json({ message: "Ride deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 router.post('/add', auth, async (req, res) => {
   try {
     const { toWhom, rideDate, amount, paid } = req.body;
