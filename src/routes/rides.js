@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Create ride
 
-router.delete("/:id", authMiddleware, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const rideId = req.params.id;
     const deletedRide = await Ride.findByIdAndDelete(rideId);
